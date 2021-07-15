@@ -1,5 +1,6 @@
 package selenium;
 
+
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 
@@ -11,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -32,12 +34,23 @@ class ExampleSeleniumTest {
     // Pick your browser
     // driver = new FirefoxDriver();
     // driver = new SafariDriver();
-    WebDriverManager.chromedriver().setup();
-    driver = new ChromeDriver();
 
+    
+    
+    
+    
+    //ChromeOptions options = new ChromeOptions();
+    //options.setBinary("/C:/Program Files (x86)/Google/Chrome/Application/chrome.exe");
+    //options.binary_location = ("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe");
+
+    WebDriverManager.chromedriver().setup();
+
+
+    driver = new ChromeDriver();
     driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     driver.get("http://localhost:8080/");
     // wait to make sure Selenium is done loading the page
+
     WebDriverWait wait = new WebDriverWait(driver, 60);
     wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("title")));
   }
@@ -73,6 +86,16 @@ class ExampleSeleniumTest {
     welcome = driver.findElement(By.cssSelector("p"));
     expected = "Bienvenu";
     actual = welcome.getText();
+    assertEquals(expected, getWords(actual)[0]);
+  }
+
+  @Test
+  public void test3() {
+    WebElement pressButton = driver.findElement(By.id("searchBtn"));
+    pressButton.click();
+    String expected = "Core";
+    WebElement firstTitle = driver.findElement(By.id("title-hall001"));
+    String actual = firstTitle.getText();
     assertEquals(expected, getWords(actual)[0]);
   }
 
